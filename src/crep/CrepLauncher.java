@@ -35,8 +35,7 @@ public class CrepLauncher {
             parser.parseArgument(args);
         } catch (CmdLineException e) {
             System.err.println(e.getMessage());
-            System.err.println("crep [-v] [-i] [-r] word inputname.txt");
-            parser.printUsage(System.err);
+            System.err.print("crep [-v] [-i] [-r] word inputname.txt");
             return;
         }
 
