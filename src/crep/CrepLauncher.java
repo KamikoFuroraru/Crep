@@ -41,9 +41,12 @@ public class CrepLauncher {
 
         Crep crep = new Crep(inputWord, inputFileName);
         try {
-            if (r) System.out.println(crep.r());
-            if (v) System.out.println(crep.v());
-            if (i) System.out.println(crep.i());
+            if (r && i || r && v || i && v) System.err.println("Unacceptable combination");
+            else {
+                if (r) System.out.println(crep.r());
+                if (v) System.out.println(crep.v());
+                if (i) System.out.println(crep.i());
+            }
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }

@@ -11,6 +11,7 @@ public class CrepTest {
     private final Crep crep4 = new Crep("АоМаМэ", "files/Aomame");
     private final Crep crep5 = new Crep(":", "files/Aomame");
     private final Crep crep6 = new Crep("хозяйк", "files/Aomame");
+    private final Crep crep7 = new Crep("[А-Я]", "files/RegEx");
 
     @Test
     public void r() throws Exception {
@@ -21,6 +22,7 @@ public class CrepTest {
         assertEquals("1 Сидя у себя на балконе, Аомамэ видит на небе две луны: одна обычная жёлтая, вторая поменьше, зеленоватая.\n" +
                 "3 Дочь хозяйки тоже совершила суицид, не выдержав домашнего насилия.\n" +
                 "5 Хозяйка попросила у Аомамэ помощи: только она, обладая мануальными способностями, могла убить садиста, не оставляя следов.", crep2.r());
+        assertEquals("Я СЕГОДНЯ ЕЛА ИЗЮМ", crep7.r());
     }
 
     @Test
