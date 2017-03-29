@@ -6,6 +6,7 @@ import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
 import java.io.IOException;
+import java.util.function.Function;
 
 public class CrepLauncher {
 
@@ -40,13 +41,15 @@ public class CrepLauncher {
         }
 
         Crep crep = new Crep(inputWord, inputFileName);
+
+        Function<String, Boolean> fun1 = (String s) -> s.equals("-r");
+        Function<String, Boolean> fun2 = (String s) -> s.equals("-v");
+        Function<String, Boolean> fun3 = (String s) -> s.equals("-i");
+
         try {
-            if (r && i || r && v || i && v) System.err.println("Unacceptable combination");
-            else {
-                if (r) System.out.println(crep.r());
-                if (v) System.out.println(crep.v());
-                if (i) System.out.println(crep.i());
-            }
+            if (r) System.out.println(crep.creper(fun1));
+            if (v) System.out.println(crep.creper(fun2));
+            if (i) System.out.println(crep.creper(fun3));
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
