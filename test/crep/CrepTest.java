@@ -19,7 +19,7 @@ public class CrepTest {
     private final Crep crep7 = new Crep("[А-Я]", "files/RegEx");
 
     @Test
-    public void doIt() throws Exception {
+    public void creper() throws Exception {
         assertEquals("регулярные выражения это круто\n" +
                 "регулярные выражения это круто\n" +
                 "регулярные выражения это круто\n" +
