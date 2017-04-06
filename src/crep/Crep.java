@@ -25,17 +25,22 @@ public class Crep {
             StringBuilder str = new StringBuilder();
             Matcher matcher = null;
             while (line != null) {
-                if (v && i)
+                if (r && v && i)
                     matcher = Pattern.compile("^((?!" + word + ").)*$", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(line);
-                if (v && !i) matcher = Pattern.compile("^((?!" + word + ").)*$").matcher(line);
-                if (!v && i)
+                if (!r && v && i)
+                    matcher = Pattern.compile("^((?!\\Q" + word + "\\E).)*$", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(line);
+                if (r && v && !i) matcher = Pattern.compile("^((?!" + word + ").)*$").matcher(line);
+                if (!r && v && !i) matcher = Pattern.compile("^((?!\\Q" + word + "\\E).)*$").matcher(line);
+                if (r && !v && i)
                     matcher = Pattern.compile(".*" + word + ".*", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(line);
+                if (!r && !v && i)
+                    matcher = Pattern.compile(".*\\Q" + word + "\\E.*", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(line);
                 if (r && !v && !i) matcher = Pattern.compile(".*" + word + ".*").matcher(line);
-                if (!r && !v && !i) str.append(line).append("\n");
-                if (matcher != null && matcher.matches()) str.append(line).append("\n");
+                if (!r && !v && !i) matcher = Pattern.compile(".*\\Q" + word + "\\E.*").matcher(line);
+                if (matcher.matches()) str.append("\n").append(line);
                 line = br.readLine();
             }
-            return str.deleteCharAt(str.lastIndexOf("\n")).toString();
+            return str.toString().replaceFirst("\n", "");
         }
     }
 }

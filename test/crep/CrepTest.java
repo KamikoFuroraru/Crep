@@ -12,7 +12,7 @@ public class CrepTest {
     private final Crep crep5 = new Crep(":", "files/Aomame");
     private final Crep crep6 = new Crep("(рЕгУлЯрНыЕ вЫрАжЕнИя ЭтО кРуТо)", "files/RegEx");
     private final Crep crep7 = new Crep("(якороль)", "files/RegEx");
-    private final Crep crep8 = new Crep("[А-Я]", "files/RegEx");
+    private final Crep crep8 = new Crep("ИЗЮМ", "files/RegEx");
 
     @Test
     public void creper() throws Exception {
@@ -39,12 +39,6 @@ public class CrepTest {
                 " Аомамэ согласилась.", crep2.creper(true, true, false));
         assertEquals("якороль\n" +
                 "якороль", crep7.creper(true, false, true));
-        assertEquals("регулярные выражения это круто\n" +
-                "регулярные выражения это круто\n" +
-                "регулярные выражения это круто\n" +
-                "якороль\n" +
-                "Я СЕГОДНЯ ЕЛА ИЗЮМ\n" +
-                "якороль\n" +
-                "регулярные выражения это круто", crep8.creper(false, false, false));
+        assertEquals("Я СЕГОДНЯ ЕЛА ИЗЮМ", crep8.creper(false, false, false));
     }
 }
