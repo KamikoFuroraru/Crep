@@ -25,18 +25,18 @@ public class Crep {
             StringBuilder str = new StringBuilder();
             Matcher matcher = null;
             while (line != null) {
-                if (r && v && i)
-                    matcher = Pattern.compile("^((?!" + word + ").)*$", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(line);
-                if (!r && v && i)
-                    matcher = Pattern.compile("^((?!\\Q" + word + "\\E).)*$", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(line);
-                if (r && v && !i) matcher = Pattern.compile("^((?!" + word + ").)*$").matcher(line);
-                if (!r && v && !i) matcher = Pattern.compile("^((?!\\Q" + word + "\\E).)*$").matcher(line);
-                if (r && !v && i)
-                    matcher = Pattern.compile(".*" + word + ".*", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(line);
-                if (!r && !v && i)
-                    matcher = Pattern.compile(".*\\Q" + word + "\\E.*", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(line);
-                if (r && !v && !i) matcher = Pattern.compile(".*" + word + ".*").matcher(line);
-                if (!r && !v && !i) matcher = Pattern.compile(".*\\Q" + word + "\\E.*").matcher(line);
+                if (v && i)
+                    matcher = r ? Pattern.compile("^((?!" + word + ").)*$", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(line) :
+                            Pattern.compile("^((?!\\Q" + word + "\\E).)*$", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(line);
+                if (v && !i)
+                    matcher = r ? Pattern.compile("^((?!" + word + ").)*$").matcher(line) :
+                            Pattern.compile("^((?!\\Q" + word + "\\E).)*$").matcher(line);
+                if (!v && i)
+                    matcher = r ? Pattern.compile(".*" + word + ".*", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(line) :
+                            Pattern.compile(".*\\Q" + word + "\\E.*", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(line);
+                if (!v && !i)
+                    matcher = r ? Pattern.compile(".*" + word + ".*").matcher(line) :
+                            Pattern.compile(".*\\Q" + word + "\\E.*").matcher(line);
                 if (matcher.matches()) str.append("\n").append(line);
                 line = br.readLine();
             }

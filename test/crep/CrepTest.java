@@ -13,6 +13,7 @@ public class CrepTest {
     private final Crep crep6 = new Crep("(рЕгУлЯрНыЕ вЫрАжЕнИя ЭтО кРуТо)", "files/RegEx");
     private final Crep crep7 = new Crep("(якороль)", "files/RegEx");
     private final Crep crep8 = new Crep("ИЗЮМ", "files/RegEx");
+    private final Crep crep9 = new Crep("[А-Я]", "files/Emptiness");
 
     @Test
     public void creper() throws Exception {
@@ -40,5 +41,9 @@ public class CrepTest {
         assertEquals("якороль\n" +
                 "якороль", crep7.creper(true, false, true));
         assertEquals("Я СЕГОДНЯ ЕЛА ИЗЮМ", crep8.creper(false, false, false));
+        assertEquals("[А-Я]", crep9.creper(false, false, false));
+        assertEquals("Глядя на лошадиные морды и лица людей,\n" +
+                "я часто думаю: где Я в этом потоке?\n" +
+                "[А-Я]", crep9.creper(true, false, false));
     }
 }
