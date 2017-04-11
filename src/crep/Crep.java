@@ -1,7 +1,6 @@
 package crep;
 
 import java.io.*;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Crep {
@@ -23,21 +22,29 @@ public class Crep {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line = br.readLine();
             StringBuilder str = new StringBuilder();
-            Matcher matcher = null;
+
+            Pattern pattern;
+            String regex = null;
+            int flags = 0;
+
+            if (v && i) {
+                regex = r ? "^((?!" + word + ").)*$" : "^((?!\\Q" + word + "\\E).)*$";
+                flags = Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE;
+            }
+
+            if (v && !i) regex = r ? "^((?!" + word + ").)*$" : "^((?!\\Q" + word + "\\E).)*$";
+
+            if (!v && i) {
+                regex = r ? ".*" + word + ".*" : ".*\\Q" + word + "\\E.*";
+                flags = Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE;
+            }
+
+            if (!v && !i) regex = r ? ".*" + word + ".*" : ".*\\Q" + word + "\\E.*";
+
+            pattern = Pattern.compile(regex, flags);
+
             while (line != null) {
-                if (v && i)
-                    matcher = r ? Pattern.compile("^((?!" + word + ").)*$", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(line) :
-                            Pattern.compile("^((?!\\Q" + word + "\\E).)*$", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(line);
-                if (v && !i)
-                    matcher = r ? Pattern.compile("^((?!" + word + ").)*$").matcher(line) :
-                            Pattern.compile("^((?!\\Q" + word + "\\E).)*$").matcher(line);
-                if (!v && i)
-                    matcher = r ? Pattern.compile(".*" + word + ".*", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(line) :
-                            Pattern.compile(".*\\Q" + word + "\\E.*", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(line);
-                if (!v && !i)
-                    matcher = r ? Pattern.compile(".*" + word + ".*").matcher(line) :
-                            Pattern.compile(".*\\Q" + word + "\\E.*").matcher(line);
-                if (matcher.matches()) str.append("\n").append(line);
+                if (pattern.matcher(line).matches()) str.append("\n").append(line);
                 line = br.readLine();
             }
             return str.toString().replaceFirst("\n", "");

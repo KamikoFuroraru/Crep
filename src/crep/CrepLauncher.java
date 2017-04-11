@@ -9,9 +9,6 @@ import java.io.IOException;
 
 public class CrepLauncher {
 
-    @Argument(required = true, metaVar = "classCrep")
-    private String classCrep;
-
     @Option(name = "-r")
     private boolean r;
 
