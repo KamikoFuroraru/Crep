@@ -23,8 +23,7 @@ public class Crep {
             String line = br.readLine();
             StringBuilder str = new StringBuilder();
 
-            Pattern pattern;
-            String regex = null;
+            String regex;
             int flags = 0;
 
             if (v && i) {
@@ -32,16 +31,16 @@ public class Crep {
                 flags = Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE;
             }
 
-            if (v && !i) regex = r ? "^((?!" + word + ").)*$" : "^((?!\\Q" + word + "\\E).)*$";
+            else if (v) regex = r ? "^((?!" + word + ").)*$" : "^((?!\\Q" + word + "\\E).)*$";
 
-            if (!v && i) {
+            else if (i) {
                 regex = r ? ".*" + word + ".*" : ".*\\Q" + word + "\\E.*";
                 flags = Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE;
             }
 
-            if (!v && !i) regex = r ? ".*" + word + ".*" : ".*\\Q" + word + "\\E.*";
+            else regex = r ? ".*" + word + ".*" : ".*\\Q" + word + "\\E.*";
 
-            pattern = Pattern.compile(regex, flags);
+            Pattern pattern = Pattern.compile(regex, flags);
 
             while (line != null) {
                 if (pattern.matcher(line).matches()) str.append("\n").append(line);
